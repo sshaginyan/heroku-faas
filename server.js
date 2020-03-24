@@ -1,3 +1,4 @@
+const zlib = require('zlib');
 const axios = require('axios');
 const express = require('express');
 const jsforce = require('jsforce');
@@ -24,37 +25,47 @@ const headers = {
 };
 
 function runλ(data) {
-    console.log(data);
-    postData.command = `npm run λ -- ${JSON.stringify(data)}`;
-    axios.post('https://api.heroku.com/apps/intel-faas/dynos', postData, { headers })
-    .then(() => { console.log('success'); })
-    .catch(error => { console.log(error); });
+    zlib.deflate(JSON.stringify(data), (error, compressed) => {
+        if(error) throw error;
+        postData.command = `npm run λ -- ${compressed}`;
+        axios.post('https://api.heroku.com/apps/intel-faas/dynos', postData, { headers })
+        .then(() => { console.log('success'); })
+        .catch(error => { console.log(error); });
+    });
 }
 
 (async () => {
     // await conn.login('sshaginyan@demo.com', '474925~Ste' + 'qi8O5SrMmrEooKYy7KrmuLifG');
     await conn.login('steve@myfirstdemo.demo', 'abc123abc');
 
-    conn.streaming.subscribe('/data/ChangeEvents', runλ);
-    conn.streaming.subscribe('/event/PlatformEvents__e', runλ);
+    conn.streaming.subscribe('/data/ChangeEvents', data => {
+        runλ({ transportType: 'Change Data Capture', data });
+    });
+    
+    conn.streaming.subscribe('/event/PlatformEvents__e', data => {
+        runλ({ transportType: 'Platform Events', data });
+    });
 
 })();
 
 app.post('/http', (request, response) => {
-    runλ(request.body);
+    runλ({ transportType: 'HTTP', data: request.body });
     response.sendStatus(200);
 });
 
-app.post('/apex', () => {
-
+app.post('/apex', (request, response) => {
+    runλ({ transportType: 'APEX', data: request.body });
+    response.sendStatus(200);
 });
 
-app.post('/lightning_web_components', () => {
-
+app.post('/lightning_web_components', (request, response) => {
+    runλ({ transportType: 'Lightning Web Components', data: request.body });
+    response.sendStatus(200);
 });
 
-app.post('/flow_builder', () => {
-
+app.post('/flow_builder', (request, response) => {
+    runλ({ transportType: 'Flow Builder', data: request.body });
+    response.sendStatus(200);
 });
 
 app.listen(process.env.PORT || 8080);
