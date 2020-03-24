@@ -1,8 +1,12 @@
 const axios = require('axios');
 const express = require('express');
 const jsforce = require('jsforce');
+const bodyParser = require('body-parser')
 
 const app = express();
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 const conn = new jsforce.Connection({});
 
@@ -36,9 +40,7 @@ function runλ(data) {
 
 })();
 
-app.post('/http', () => {
-
-});
+app.post('/http', request => runλ(request.body));
 
 app.post('/apex', () => {
 
