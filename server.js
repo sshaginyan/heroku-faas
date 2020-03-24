@@ -1,5 +1,5 @@
-const zlib = require('zlib');
 const axios = require('axios');
+const lzutf8 = require('lzutf8');
 const express = require('express');
 const jsforce = require('jsforce');
 const bodyParser = require('body-parser')
@@ -25,13 +25,11 @@ const headers = {
 };
 
 function runλ(data) {
-    zlib.deflate(JSON.stringify(data), (error, compressed) => {
-        if(error) throw error;
-        postData.command = `npm run λ -- ${compressed}`;
-        axios.post('https://api.heroku.com/apps/intel-faas/dynos', postData, { headers })
-        .then(() => { console.log('success'); })
-        .catch(error => { console.log(error); });
-    });
+    postData.command = `npm run λ -- ${lzutf8.compress(JSON.stringify(data))}`;
+    console.log(postData);
+    axios.post('https://api.heroku.com/apps/intel-faas/dynos', postData, { headers })
+    .then(() => { console.log('success'); })
+    .catch(error => { console.log(error); });
 }
 
 (async () => {
