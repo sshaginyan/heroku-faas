@@ -40,7 +40,10 @@ function runλ(data) {
 
 })();
 
-app.post('/http', request => runλ(request.body));
+app.post('/http', (request, response) => {
+    runλ(request.body);
+    response.status(200);
+});
 
 app.post('/apex', () => {
 
