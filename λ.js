@@ -1,10 +1,8 @@
 const axios = require('axios');
 
-const data = require('./data.json');
-
 console.log('============================');
 
-console.log(data);
+//console.log(data);
 
 console.log('============================');
 
