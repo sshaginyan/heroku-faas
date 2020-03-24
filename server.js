@@ -25,13 +25,10 @@ const headers = {
 };
 
 function runλ(data) {
-    zlib.deflate(JSON.stringify(data), (error, buffer) => {
-        if(error) throw error;
-        postData.command = `npm run λ -- ${buffer}`;
-        axios.post('https://api.heroku.com/apps/intel-faas/dynos', postData, { headers })
-        .then(() => { console.log('success'); })
-        .catch(error => { console.log(error); });
-    });
+    postData.command = `npm run λ`;
+    axios.post('https://api.heroku.com/apps/intel-faas/dynos', postData, { headers })
+    .then(() => { console.log('success'); })
+    .catch(error => { console.log(error); });
 }
 
 (async () => {
