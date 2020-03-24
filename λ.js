@@ -3,7 +3,7 @@ const lzutf8 = require('lzutf8');
 
 console.log('============================');
 
-console.log(lzutf8.decompress(process.argv[2]));
+console.log(lzutf8.decompress(Buffer(process.argv[2])));
 
 console.log('============================');
 
