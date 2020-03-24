@@ -1,3 +1,4 @@
+const zlib = require('zlib');
 const axios = require('axios');
 const express = require('express');
 const jsforce = require('jsforce');
@@ -24,11 +25,13 @@ const headers = {
 };
 
 function runλ(data) {
-    postData.command = `echo ${JSON.stringify(data)} >> data.json && npm run λ`;
-    console.log(postData);
-    axios.post('https://api.heroku.com/apps/intel-faas/dynos', postData, { headers })
-    .then(() => { console.log('success'); })
-    .catch(error => { console.log(error); });
+    zlib.deflate(data, (error, buffer) => {
+        if(error) throw error;
+        postData.command = `npm run λ -- ${buffer}`;
+        axios.post('https://api.heroku.com/apps/intel-faas/dynos', postData, { headers })
+        .then(() => { console.log('success'); })
+        .catch(error => { console.log(error); });
+    });
 }
 
 (async () => {
