@@ -28,8 +28,8 @@ function runλ(data) {
 }
 
 (async () => {
-    await conn.login('sshaginyan@demo.com', '474925~Ste' + 'qi8O5SrMmrEooKYy7KrmuLifG');
-    //await conn.login('steve@myfirstdemo.demo', 'abc123abc');
+    // await conn.login('sshaginyan@demo.com', '474925~Ste' + 'qi8O5SrMmrEooKYy7KrmuLifG');
+    await conn.login('steve@myfirstdemo.demo', 'abc123abc');
 
     conn.streaming.subscribe('/data/ChangeEvents', runλ);
     conn.streaming.subscribe('/event/PlatformEvents__e', runλ);
