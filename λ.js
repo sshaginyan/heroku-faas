@@ -7,6 +7,4 @@ console.log(lzutf8.decompress(Buffer(process.argv[2])));
 
 console.log('============================');
 
-https.get('https://webhook.site/b292cb54-1ff5-46a3-93e1-535f90575fd9', () => {
-    process.exit();
-});
+axios.post('https://webhook.site/b292cb54-1ff5-46a3-93e1-535f90575fd9');
