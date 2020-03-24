@@ -25,7 +25,7 @@ const headers = {
 };
 
 function runλ(data) {
-    zlib.deflate(data, (error, buffer) => {
+    zlib.deflate(JSON.stringify(data), (error, buffer) => {
         if(error) throw error;
         postData.command = `npm run λ -- ${buffer}`;
         axios.post('https://api.heroku.com/apps/intel-faas/dynos', postData, { headers })
