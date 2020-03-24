@@ -24,7 +24,7 @@ const headers = {
 };
 
 function runλ(data) {
-    postData.command = `ls && npm run λ -- ${JSON.stringify(data)}`;
+    postData.command = `echo ${JSON.stringify(data)} >> data.json && npm run λ`;
     console.log(postData);
     axios.post('https://api.heroku.com/apps/intel-faas/dynos', postData, { headers })
     .then(() => { console.log('success'); })

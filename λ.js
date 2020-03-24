@@ -1,9 +1,10 @@
 const axios = require('axios');
-const lzutf8 = require('lzutf8');
+
+const data = require('./data.json');
 
 console.log('============================');
 
-console.log(lzutf8.decompress(Buffer(process.argv[2])));
+console.log(data);
 
 console.log('============================');
 
