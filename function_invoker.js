@@ -33,13 +33,12 @@ const headers = {
 };
 
 async function runFunction(data) {
-    postData.command = `npm run function`;
+    postData.command = `npm run function -- ${data.transportType}`;
     await axios.post('https://api.heroku.com/apps/intel-faas/dynos', postData, { headers });
 }
 
 (async () => {
     await conn.login('sshaginyan@demo.com', '474925~Ste' + 'qi8O5SrMmrEooKYy7KrmuLifG');
-    //await conn.login('steve@myfirstdemo.demo', 'abc123abc');
 
     conn.streaming.subscribe('/data/ChangeEvents', data => {
         runFunction({ transportType: 'Change Data Capture', data });
