@@ -70,13 +70,13 @@ app.post('/apex', (request, response) => {
     response.sendStatus(200);
 });
 
-app.post('/lightning_web_components', (request, response) => {
-    runFunction({ transportType: 'Lightning_Web_Components', data: request.body });
+app.post('/flow', (request, response) => {
+    runFunction({ transportType: 'Flow Builder', data: request.body });
     response.sendStatus(200);
 });
 
-app.post('/flow_builder', (request, response) => {
-    runFunction({ transportType: 'Flow Builder', data: request.body });
+app.post('/lightning_web_components', (request, response) => {
+    runFunction({ transportType: 'Lightning_Web_Components', data: request.body });
     response.sendStatus(200);
 });
 
