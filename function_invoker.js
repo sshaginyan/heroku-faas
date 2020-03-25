@@ -41,11 +41,11 @@ async function runFunction(data) {
     await conn.login('sshaginyan@demo.com', '474925~Ste' + 'qi8O5SrMmrEooKYy7KrmuLifG');
 
     conn.streaming.subscribe('/data/ChangeEvents', data => {
-        runFunction({ transportType: 'Change Data Capture', data });
+        runFunction({ transportType: 'Change_Data_Capture', data });
     });
     
     conn.streaming.subscribe('/event/PlatformEvents__e', data => {
-        runFunction({ transportType: 'Platform Events', data });
+        runFunction({ transportType: 'Platform_Events', data });
     });
 
 })();
@@ -55,7 +55,7 @@ client.connect((error, client) => {
 
     client.on('notification', msg => {
         const data = JSON.parse(msg.payload);
-        runFunction({ transportType: 'Heroku Connect', data });
+        runFunction({ transportType: 'Heroku_Connect', data });
     });
     client.query('LISTEN faas');
 });
@@ -71,7 +71,7 @@ app.post('/apex', (request, response) => {
 });
 
 app.post('/lightning_web_components', (request, response) => {
-    runFunction({ transportType: 'Lightning Web Components', data: request.body });
+    runFunction({ transportType: 'Lightning_Web_Components', data: request.body });
     response.sendStatus(200);
 });
 
