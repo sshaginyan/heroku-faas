@@ -71,7 +71,7 @@ app.post('/apex', (request, response) => {
 });
 
 app.post('/flow', (request, response) => {
-    runFunction({ transportType: 'Flow Builder', data: request.body });
+    runFunction({ transportType: 'Flow', data: request.body });
     response.sendStatus(200);
 });
 
