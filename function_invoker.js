@@ -66,7 +66,7 @@ app.post('/http', (request, response) => {
 });
 
 app.post('/apex', (request, response) => {
-    runFunction({ transportType: 'APEX', data: request.body });
+    runFunction({ transportType: 'Apex', data: request.body });
     response.sendStatus(200);
 });
 
